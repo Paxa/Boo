@@ -19,6 +19,7 @@ class Boo::File < Boo::Storage
   def put(key, content)
     if content.is_a?(String)
       File.open(@root + key, 'w+:utf-8') { |f| f.write(content) }
+      true
     elsif content.is_a?(StringIO)
       File.open(@root + key, 'w+:utf-8') do |f| 
         p 'in parts'
@@ -26,13 +27,16 @@ class Boo::File < Boo::Storage
           f.write(part)
         end
       end
+      true
     elsif content.is_a?(Array)
       FileUtils.mkdir_p(@root + key)
+      true
     end
   end
   
   def delete(key)
     FileUtils.rm_r(@root + key)
+    true
   end
   
   def size_of(key)
@@ -40,7 +44,15 @@ class Boo::File < Boo::Storage
   end
   
   def stat(key)
-    File.stat(@root + key)
+    filestat = File.stat(@root + key)
+    {
+      :access_time => filestat.atime,
+      :create_time => filestat.ctime,
+      :modifi_time => filestat.mtime,
+      :object_type => filestat.directory? ? 'dir' : 'file',
+      :executable  => filestat.executable?,
+      :size        => filestat.size
+    }
   end
   
   def strip_dotes(list)

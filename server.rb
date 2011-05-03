@@ -37,7 +37,10 @@ class Boo::Server
       result = resource.delete(path)
       response_with(:ok, result)
     elsif request.env['REQUEST_METHOD'] == 'SIZE_OF'
-      result = resource.size_if(path)
+      result = resource.size_of(path)
+      response_with(:ok, result)
+    elsif request.env['REQUEST_METHOD'] == 'STAT'
+      result = resource.stat(path)
       response_with(:ok, result)
     end
   end

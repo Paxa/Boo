@@ -16,6 +16,7 @@ end
 
 require "./storage"
 require "./storages/file"
+require "./storages/tmp_dir"
 
 require "./config"
 require "./router"

@@ -10,6 +10,12 @@ class Net::HTTP::SizeOf <  Net::HTTPRequest
   RESPONSE_HAS_BODY = true
 end
 
+class Net::HTTP::Stat <  Net::HTTPRequest
+  METHOD = 'STAT'
+  REQUEST_HAS_BODY = true
+  RESPONSE_HAS_BODY = true
+end
+
 module Boo
   class Client
     
@@ -35,8 +41,18 @@ module Boo
       end
     end
     
+    def delete(key)
+      auto_reconnect_request do 
+        connect.delete(key).body
+      end
+    end
+    
     def size_of(key)
       connect.request(Net::HTTP::SizeOf.new(key, {})).body
+    end
+    
+    def stat(key)
+      connect.request(Net::HTTP::Stat.new(key, {})).body
     end
     
     def auto_reconnect_request(&block)
