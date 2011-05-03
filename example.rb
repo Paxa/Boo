@@ -1,6 +1,16 @@
+# gem install yajl-ruby
 require "./boo"
+
+# gem install ruby-tokyotyrant
+# brew install tokyo-tyrant
+# ttserver -host 127.0.0.1 -port 1978
 require "./storages/tokyo_tyrant"
+
+# gem install memcache-client
+# brew install memcached
+# memcached -d
 require "./storages/memcache"
+
 require "thin"
 
 require "pp"
