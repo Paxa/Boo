@@ -12,7 +12,7 @@ Like user info from twitter api or local file or rows from sql-base or message f
 
 ### Usage
 
-This is early scrach, you can see with example, start server
+This is early scrach, you can see example, you need start server
 
     ruby example.rb
 
